@@ -42,8 +42,8 @@ public class AdminMenu implements AdminMenuInterface {
                 System.out.println("Укажите категорию:");
                 String category = sc.next();
 
-                CategoryProducts categoryProducts=new CategoryProducts(null);
-                categoryProducts.setCategories(Collections.singletonList(new Product(null,name,price,categoryProducts)));
+                CategoryProducts categoryProducts=new CategoryProducts(null,category);
+                categoryProducts.setCategoryList(Collections.singletonList(new Product(null,name,price,categoryProducts)));
 
                 shopDAOInterface.add(categoryProducts);
                 System.out.println("Товар добавлен");

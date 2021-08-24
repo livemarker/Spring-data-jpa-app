@@ -1,6 +1,7 @@
 package task23.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import task23.DAO.interfaces.ShopDAOInterface;
 import task23.DAO.repositories.ShopDAOCategoryRepository;
@@ -8,7 +9,9 @@ import task23.entity.CategoryProducts;
 import task23.entity.Product;
 import task23.DAO.repositories.ShopDAOProductRepository;
 
+import javax.persistence.EntityManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +36,17 @@ public class ShopDAO implements ShopDAOInterface {
     }
 
     @Override
+
     public List<CategoryProducts> getCategoryProducts() {
-        return shopDAOCategoryRepository.findAll();
+
+        List<CategoryProducts> categoryProducts=shopDAOCategoryRepository.findAllByCategories("q");
+        return categoryProducts;
     }
 
     @Override
-    public List<Product> getProducts(int index) {
-        CategoryProducts categoryProducts = shopDAOCategoryRepository.getOne(index);
-        return categoryProducts.getCategories();
+    public List<Product> getProducts(String s) {
+
+        return shopDAOProductRepository.getAllByCategory_Categories(s);
     }
+
 }

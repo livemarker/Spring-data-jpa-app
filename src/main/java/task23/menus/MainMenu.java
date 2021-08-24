@@ -56,7 +56,7 @@ public class MainMenu implements MainMenuInterface {
         String login = sc.next();
 
         user = userDAOInterface.load(login);
-        accountMenuInterface.run();
+        accountMenuInterface.run(user);
     }
 
     private void registration() throws SQLException {

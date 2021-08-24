@@ -13,13 +13,15 @@ public class CategoryProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column
+    private String categories;
 
-    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Product> categories;
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> categoryList;
 
-    public CategoryProducts(Integer id) {
+    public CategoryProducts(Integer id, String categories) {
         this.id = id;
-
+        this.categories = categories;
     }
 
     public CategoryProducts() {
@@ -33,11 +35,19 @@ public class CategoryProducts {
         this.id = id;
     }
 
-    public List<Product> getCategories() {
-        return categories;
+    public List<Product> getCategoryList() {
+        return categoryList;
     }
 
-    public void setCategories(List<Product> categories) {
+    public void setCategoryList(List<Product> categories) {
+        this.categoryList = categories;
+    }
+
+    public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public String getCategories() {
+        return categories;
     }
 }

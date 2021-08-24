@@ -25,7 +25,7 @@ public class OrderMenu implements OrderMenuInterface {
 
 
     @Override
-    public void run() throws SQLException {
+    public void run(User user) throws SQLException {
         System.out.println("----------------");
         System.out.println("Меню заказов");
         getOrder();
@@ -33,9 +33,9 @@ public class OrderMenu implements OrderMenuInterface {
         System.out.println("Для возврата в меню аккаунта: -1");
         int choice = sc.nextInt();
         if (choice == -1) {
-            accountMenuInterface.run();
+            accountMenuInterface.run(user);
         } else {
-            run();
+            run(user);
         }
     }
 

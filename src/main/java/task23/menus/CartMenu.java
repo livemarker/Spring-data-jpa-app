@@ -23,9 +23,8 @@ public class CartMenu implements CartMenuInterface {
     private OrderMenuInterface orderMenuInterface;
 
 
-
     @Override
-    public void run() throws SQLException {
+    public void run(User user) throws SQLException {
         System.out.println("---------------------");
         System.out.println("Моя корзина");
         System.out.println(getCart().toString());
@@ -38,20 +37,20 @@ public class CartMenu implements CartMenuInterface {
         int choice = sc.nextInt();
         if (choice == 1) {
             orderMenuInterface.addOrder(cart);
-            orderMenuInterface.run();
+            orderMenuInterface.run(user);
             System.out.println("Товары оплачены, сформирован заказ");
         } else if (choice == 2) {
             clear();
-            accountMenuInterface.run();
+            accountMenuInterface.run(user);
         } else if (choice == -1) {
-            accountMenuInterface.run();
+            accountMenuInterface.run(user);
         } else {
             System.out.println("Выберите правильный пункт меню");
             try {
                 Thread.sleep(200);
             } catch (Exception e) {
             }
-            run();
+            run(user);
         }
     }
 

@@ -20,8 +20,8 @@ public class Product {
     @JoinColumn
     private CategoryProducts category;
 
-    public Product(Integer id,String name, double price, CategoryProducts category) {
-        this.id=id;
+    public Product(Integer id, String name, double price, CategoryProducts category) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
@@ -66,9 +66,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                '}';
+                ", price=" + price;
     }
 }
 

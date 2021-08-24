@@ -18,7 +18,8 @@ public class ProfileMenu implements ProfileMenuInterface {
     private ProfileDAOInterface profileDAOInterface;
     private MainMenuInterface mainMenuInterface;
     private User user ;
-    public void run() throws SQLException {
+    public void run(User user) throws SQLException {
+        this.user=user;
         System.out.println("-------------------");
         System.out.println("Информация о профиле:");
         System.out.println(user.toString());
@@ -30,18 +31,18 @@ public class ProfileMenu implements ProfileMenuInterface {
         int choice = sc.nextInt();
         if (choice == 1) {
             changeInfo();
-            run();
+            run( user);
         } else if (choice == 2) {
             delProfile();
         } else if (choice == 3) {
-            accountMenuInterface.run();
+            accountMenuInterface.run(user);
         } else {
             System.out.println("Выберите правильный пункт меню");
             try {
                 Thread.sleep(200);
             } catch (Exception e) {
             }
-            run();
+            run(user);
         }
     }
 
@@ -75,7 +76,7 @@ public class ProfileMenu implements ProfileMenuInterface {
         if (choice == 1) {
             profileDAOInterface.delProfile(user);
         } else if (choice == 2) {
-            accountMenuInterface.run();
+            accountMenuInterface.run(user);
 
         } else {
             System.out.println("Выберите правильный пункт меню");

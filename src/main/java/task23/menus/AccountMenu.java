@@ -21,11 +21,11 @@ public class AccountMenu implements AccountMenuInterface {
     private ProfileMenuInterface profileMenuInterface;
 
     private Scanner sc = new Scanner(System.in);
-    private static User user=MainMenu.getUser();
+    private static User user;
 
 
 
-    public void run() throws SQLException {
+    public void run(User user) throws SQLException {
         System.out.println("-------------------------");
         System.out.println("Добро пожаловать " + user.getFirstName() + " " + user.getLastName());
         System.out.println();
@@ -40,13 +40,13 @@ public class AccountMenu implements AccountMenuInterface {
         System.out.println("Выход -1");
         int choice = sc.nextInt();
         if (choice == 1) {
-            shopMenuInterface.run();
+            shopMenuInterface.run(user);
         } else if (choice == 2) {
-            profileMenuInterface.run();
+            profileMenuInterface.run(user);
         } else if (choice == 3) {
-            cartMenuInterface.run();
+            cartMenuInterface.run(user);
         } else if (choice == 4) {
-            orderMenuInterface.run();
+            orderMenuInterface.run(user);
         } else if (choice == 5) {
             //  SupportMenu.create(user).run();
         } else if (choice == 6) {
@@ -54,7 +54,7 @@ public class AccountMenu implements AccountMenuInterface {
                 adminMenuInterface.run();
             } else {
                 System.out.println("Вы не являетесь администратором, выберите другой пункт меню");
-                run();
+                run(user);
             }
         } else if (choice == -1) {
             System.exit(1);
@@ -64,7 +64,7 @@ public class AccountMenu implements AccountMenuInterface {
                 Thread.sleep(200);
             } catch (Exception e) {
             }
-            run();
+            run(user);
         }
     }
 

@@ -7,6 +7,6 @@ import java.util.List;
 
 
 public interface ShopDAOProductRepository extends JpaRepository<Product, Integer> {
-
+List<Product> getAllByCategory_Categories(String find);
 
 }
