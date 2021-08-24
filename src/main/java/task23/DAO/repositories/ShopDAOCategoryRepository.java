@@ -11,5 +11,7 @@ import java.util.List;
 @Repository
 public interface ShopDAOCategoryRepository extends JpaRepository<CategoryProducts,Integer> {
 
-    List<CategoryProducts> findAllByCategories(String s);
+    List<CategoryProducts> getAllByCategoriesIs(String s);
+
+    List<CategoryProducts> getAllByCategoriesNotNull();
 }

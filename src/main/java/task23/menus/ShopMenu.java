@@ -33,7 +33,7 @@ public class ShopMenu implements ShopMenuInterface {
     }
 
     public void run(User user) throws SQLException {
-        this.user=user;
+        this.user = user;
         System.out.println("-------------------");
         System.out.println("Меню товаров:");
         showCategoryProducts();
@@ -45,26 +45,25 @@ public class ShopMenu implements ShopMenuInterface {
         System.out.println("Выберите категорию товаров по номеру:");
         Set<String> category = new HashSet<>();
         List<CategoryProducts> listCategory = shopDAOInterface.getCategoryProducts();
+
         for (int i = 0; i < listCategory.size(); i++) {
             category.add(listCategory.get(i).getCategories());
         }
-        for (int i = 0; i < category.size(); i++) {
-            System.out.println(i + ".     " + category.iterator().next());
+
+        List<String> strings = new ArrayList<>(category);
+
+        for (int i = 0; i < strings.size(); i++) {
+            System.out.println(i + ".     " + strings.get(i));
         }
+
         System.out.println();
         System.out.println("Для перехода назад цифра -1");
         int choice = sc.nextInt();
-        String choiceCategory="";
-        for (int i = 0; i < category.size(); i++) {
-            if (i==choice){
-                choiceCategory=category.iterator().next();
-                break;
-            }
-            category.iterator().next();
-        }
+
         if (choice == -1) {
             accountMenuInterface.run(user);
         } else {
+            String choiceCategory = strings.get(choice);
             getProducts(choiceCategory);
         }
     }

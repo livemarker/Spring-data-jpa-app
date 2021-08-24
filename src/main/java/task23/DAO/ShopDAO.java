@@ -38,15 +38,23 @@ public class ShopDAO implements ShopDAOInterface {
     @Override
 
     public List<CategoryProducts> getCategoryProducts() {
-
-        List<CategoryProducts> categoryProducts=shopDAOCategoryRepository.findAllByCategories("q");
+        List<CategoryProducts> categoryProducts = shopDAOCategoryRepository.getAllByCategoriesNotNull();
         return categoryProducts;
     }
 
     @Override
     public List<Product> getProducts(String s) {
+        List<CategoryProducts> list = shopDAOCategoryRepository.getAllByCategoriesIs(s);
 
-        return shopDAOProductRepository.getAllByCategory_Categories(s);
+        List<Product> listProducts = new ArrayList<>();
+
+        for (int i = 0; i <list.size() ; i++) {
+            listProducts.add(shopDAOProductRepository
+                    .getAllByCategory_Id(list.get(i).getId()).get(0));
+
+        }
+
+        return listProducts;
     }
 
 }

@@ -1,8 +1,5 @@
 package task23.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
@@ -49,5 +46,14 @@ public class CategoryProducts {
 
     public String getCategories() {
         return categories;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryProducts{" +
+                "id=" + id +
+                ", categories='" + categories + '\'' +
+                ", categoryList=" + categoryList +
+                '}';
     }
 }
