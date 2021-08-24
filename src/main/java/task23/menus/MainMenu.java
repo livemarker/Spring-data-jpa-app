@@ -1,18 +1,28 @@
 package task23.menus;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import task23.DAO.UserDAO;
-import task23.DAO.UserRepository;
+import task23.DAO.interfaces.UserDAOInterface;
 import task23.entity.User;
+import task23.menus.intefaces.AccountMenuInterface;
+import task23.menus.intefaces.MainMenuInterface;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-@Component
-public class MainMenu {
-    private static Scanner sc = new Scanner(System.in);
-    private static UserRepository userRepository;
 
-    public static void run() throws SQLException {
+@Component
+public class MainMenu implements MainMenuInterface {
+    private Scanner sc = new Scanner(System.in);
+    private static User user;
+
+
+    private UserDAOInterface userDAOInterface;
+    private AccountMenuInterface accountMenuInterface;
+
+
+    public void run() throws SQLException {
         System.out.println("Добро пожаловать в ВТБ магазин");
         System.out.println("Для совершения покупок, войдите в личный кабинет");
         System.out.println("Управление осуществляется в консоли цифрами");
@@ -40,15 +50,16 @@ public class MainMenu {
         }
     }
 
-    static private void authorization() throws SQLException {
+    private void authorization() throws SQLException {
         System.out.println("Чтобы войти в аккаунт введите имя и фамилию ");
         System.out.println("Введите login: ");
         String login = sc.next();
 
-        AccountMenu.create(new UserDAO(userRepository,new User(login)).load()).run();
+        user = userDAOInterface.load(login);
+        accountMenuInterface.run();
     }
 
-    static private void registration() throws SQLException {
+    private void registration() throws SQLException {
         System.out.println("Введите login: ");
         String login = sc.next();
         System.out.println("Введите имя: ");
@@ -60,8 +71,25 @@ public class MainMenu {
         System.out.println("Введите номер телефона: ");
         String phone = sc.next();
 
-        new UserDAO(userRepository,new User(login, name, lastName, address, phone)).save();
+        User user = new User(login, name, lastName, address, phone);
+        userDAOInterface.save(user);
+
         System.out.println("Вы успешно зарегистрированы ");
         authorization();
+    }
+
+
+    @Autowired
+    public void setUserDAOInterface(UserDAOInterface userDAOInterface) {
+        this.userDAOInterface = userDAOInterface;
+    }
+
+    @Autowired
+    public void setAccountMenuInterface(AccountMenuInterface accountMenuInterface) {
+        this.accountMenuInterface = accountMenuInterface;
+    }
+
+    public static User getUser(){
+       return user;
     }
 }

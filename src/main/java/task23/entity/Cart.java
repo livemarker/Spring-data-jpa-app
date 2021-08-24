@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 @Component
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "cart")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -16,18 +16,20 @@ public class Product {
     private String name;
     @Column
     private double price;
+    @Column
+    private String category;
     @ManyToOne
     @JoinColumn
-    private CategoryProducts category;
+    private Order order;
 
-    public Product(Integer id,String name, double price, CategoryProducts category) {
-        this.id=id;
+    public Cart(Integer id, String name, double price, String category) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
     }
 
-    public Product() {
+    public Cart() {
     }
 
     public int getId() {
@@ -54,11 +56,11 @@ public class Product {
         this.price = price;
     }
 
-    public CategoryProducts getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryProducts category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -69,6 +71,18 @@ public class Product {
                 ", price=" + price +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
 

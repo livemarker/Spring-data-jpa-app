@@ -1,31 +1,30 @@
 package task23.menus;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import task23.entity.Product;
 import task23.entity.User;
+import task23.menus.intefaces.AccountMenuInterface;
+import task23.menus.intefaces.CartMenuInterface;
+import task23.menus.intefaces.MainMenuInterface;
+import task23.menus.intefaces.OrderMenuInterface;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class CartMenu {
+@Service
+public class CartMenu implements CartMenuInterface {
+
     private List<Product> cart = new ArrayList<>();
-    private static CartMenu cartMenu;
     private Scanner sc = new Scanner(System.in);
-    private User user;
+    private AccountMenuInterface accountMenuInterface;
+    private OrderMenuInterface orderMenuInterface;
 
-    private CartMenu(User user) {
-        this.user = user;
-    }
 
-    public static CartMenu create(User user) {
-        if (cartMenu == null) {
-            cartMenu = new CartMenu(user);
-        }
-        return cartMenu;
-    }
 
+    @Override
     public void run() throws SQLException {
         System.out.println("---------------------");
         System.out.println("Моя корзина");
@@ -38,14 +37,14 @@ public class CartMenu {
 
         int choice = sc.nextInt();
         if (choice == 1) {
-            OrderMenu.create(user).addOrder(cart);
-            OrderMenu.create(user).run();
+            orderMenuInterface.addOrder(cart);
+            orderMenuInterface.run();
             System.out.println("Товары оплачены, сформирован заказ");
         } else if (choice == 2) {
             clear();
-            AccountMenu.create(user).run();
+            accountMenuInterface.run();
         } else if (choice == -1) {
-            AccountMenu.create(user).run();
+            accountMenuInterface.run();
         } else {
             System.out.println("Выберите правильный пункт меню");
             try {
@@ -56,6 +55,11 @@ public class CartMenu {
         }
     }
 
+    private void clear() {
+        cart.clear();
+        System.out.println("Корзина с товарами отчищена");
+    }
+
     public List<Product> getCart() {
         return cart;
     }
@@ -64,11 +68,13 @@ public class CartMenu {
         this.cart = cart;
     }
 
-    private void buy() {
+    @Autowired
+    public void setAccountMenuInterface(AccountMenuInterface accountMenuInterface) {
+        this.accountMenuInterface = accountMenuInterface;
     }
 
-    private void clear() {
-        cart.clear();
-        System.out.println("Корзина с товарами отчищена");
+    @Autowired
+    public void setOrderMenuInterface(OrderMenuInterface orderMenuInterface) {
+        this.orderMenuInterface = orderMenuInterface;
     }
 }

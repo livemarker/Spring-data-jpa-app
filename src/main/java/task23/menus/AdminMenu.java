@@ -1,16 +1,29 @@
 package task23.menus;
 
-
-import task23.DAO.ShopDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import task23.DAO.interfaces.ShopDAOInterface;
+import task23.entity.CategoryProducts;
+import task23.entity.Product;
+import task23.menus.intefaces.AdminMenuInterface;
+import task23.menus.intefaces.MainMenuInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
-public class AdminMenu {
+@Component
+public class AdminMenu implements AdminMenuInterface {
     private Scanner sc = new Scanner(System.in);
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private MainMenuInterface mainMenuInterface;
+    private ShopDAOInterface shopDAOInterface;
+
+
 
     public void run() throws SQLException {
         System.out.println("------------------");
@@ -29,14 +42,25 @@ public class AdminMenu {
                 System.out.println("Укажите категорию:");
                 String category = sc.next();
 
-                ShopDAO.create().add(name, price, category);
+                CategoryProducts categoryProducts=new CategoryProducts(null);
+                categoryProducts.setCategories(Collections.singletonList(new Product(null,name,price,categoryProducts)));
+
+                shopDAOInterface.add(categoryProducts);
                 System.out.println("Товар добавлен");
                 run();
             } catch (Exception e) {
             }
         }
         if (choice == 2) {
-            MainMenu.run();
+            mainMenuInterface.run();
         }
+    }
+    @Autowired
+    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
+        this.mainMenuInterface = mainMenuInterface;
+    }
+    @Autowired
+    public void setShopDAOInterface(ShopDAOInterface shopDAOInterface) {
+        this.shopDAOInterface = shopDAOInterface;
     }
 }

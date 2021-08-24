@@ -1,26 +1,29 @@
 package task23.menus;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import task23.DAO.interfaces.ProfileDAOInterface;
 import task23.entity.User;
+import task23.menus.intefaces.*;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class AccountMenu {
-    private User user;
+@Component
+public class AccountMenu implements AccountMenuInterface {
+
+
+    private MainMenuInterface mainMenuInterface;
+    private AdminMenuInterface adminMenuInterface;
+    private ShopMenuInterface shopMenuInterface;
+    private CartMenuInterface cartMenuInterface;
+    private OrderMenuInterface orderMenuInterface;
+    private ProfileMenuInterface profileMenuInterface;
+
     private Scanner sc = new Scanner(System.in);
-    private static AccountMenu accountMenu;
+    private static User user=MainMenu.getUser();
 
-    private AccountMenu(User user) {
-        this.user = user;
-    }
 
-    public static AccountMenu create(User user) {
-        if (accountMenu == null) {
-            accountMenu = new AccountMenu(user);
-        }
-        return accountMenu;
-    }
 
     public void run() throws SQLException {
         System.out.println("-------------------------");
@@ -37,26 +40,21 @@ public class AccountMenu {
         System.out.println("Выход -1");
         int choice = sc.nextInt();
         if (choice == 1) {
-            new ShopMenu(user).run();
+            shopMenuInterface.run();
         } else if (choice == 2) {
-            new ProfileMenu(user).run();
+            profileMenuInterface.run();
         } else if (choice == 3) {
-            CartMenu.create(user).run();
+            cartMenuInterface.run();
         } else if (choice == 4) {
-            OrderMenu.create(user).run();
+            orderMenuInterface.run();
         } else if (choice == 5) {
-            SupportMenu.create(user).run();
+            //  SupportMenu.create(user).run();
         } else if (choice == 6) {
-            if (user.getFirstName().equals("admin") && user.getLastName().equals("admin")) {
-                new AdminMenu().run();
+            if (user.getLogin().equals("admin")) {
+                adminMenuInterface.run();
             } else {
                 System.out.println("Вы не являетесь администратором, выберите другой пункт меню");
-                try {
-                    Thread.sleep(200);
-                } catch (Exception e) {
-                }
-
-                AccountMenu.create(user).run();
+                run();
             }
         } else if (choice == -1) {
             System.exit(1);
@@ -68,5 +66,35 @@ public class AccountMenu {
             }
             run();
         }
+    }
+
+    @Autowired
+    public void setAdminMenuInterface(AdminMenuInterface adminMenuInterface) {
+        this.adminMenuInterface = adminMenuInterface;
+    }
+
+    @Autowired
+    public void setShopMenuInterface(ShopMenuInterface shopMenuInterface) {
+        this.shopMenuInterface = shopMenuInterface;
+    }
+
+    @Autowired
+    public void setCartMenuInterface(CartMenuInterface cartMenuInterface) {
+        this.cartMenuInterface = cartMenuInterface;
+    }
+
+    @Autowired
+    public void setOrderMenuInterface(OrderMenuInterface orderMenuInterface) {
+        this.orderMenuInterface = orderMenuInterface;
+    }
+
+    @Autowired
+    public void setProfileMenuInterface(ProfileMenuInterface profileMenuInterface) {
+        this.profileMenuInterface = profileMenuInterface;
+    }
+
+    @Autowired
+    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
+        this.mainMenuInterface = mainMenuInterface;
     }
 }

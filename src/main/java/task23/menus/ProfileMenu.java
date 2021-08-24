@@ -1,19 +1,23 @@
 package task23.menus;
 
-import task23.DAO.ProfileMenuDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import task23.DAO.interfaces.ProfileDAOInterface;
 import task23.entity.User;
+import task23.menus.intefaces.AccountMenuInterface;
+import task23.menus.intefaces.MainMenuInterface;
+import task23.menus.intefaces.ProfileMenuInterface;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class ProfileMenu {
-    private User user;
+@Service
+public class ProfileMenu implements ProfileMenuInterface {
     private Scanner sc = new Scanner(System.in);
-
-    public ProfileMenu(User user) {
-        this.user = user;
-    }
-
+    private AccountMenuInterface accountMenuInterface;
+    private ProfileDAOInterface profileDAOInterface;
+    private MainMenuInterface mainMenuInterface;
+    private User user ;
     public void run() throws SQLException {
         System.out.println("-------------------");
         System.out.println("Информация о профиле:");
@@ -30,7 +34,7 @@ public class ProfileMenu {
         } else if (choice == 2) {
             delProfile();
         } else if (choice == 3) {
-            AccountMenu.create(user).run();
+            accountMenuInterface.run();
         } else {
             System.out.println("Выберите правильный пункт меню");
             try {
@@ -56,8 +60,9 @@ public class ProfileMenu {
         System.out.println("Текущее телефон: " + user.getPhoneNumber() + " изменить на ");
         String phoneNumberTemp = sc.next();
 
-        new ProfileMenuDAO().changeInfo(user, firstNameTemp, lastNameTemp, addressTemp, phoneNumberTemp);
-        user = new User(firstNameTemp, lastNameTemp, addressTemp, phoneNumberTemp);
+        user = new User(user.getLogin(), firstNameTemp, lastNameTemp, addressTemp, phoneNumberTemp);
+        profileDAOInterface.changeInfo(user);
+
     }
 
     private void delProfile() throws SQLException {
@@ -68,9 +73,9 @@ public class ProfileMenu {
         int choice = sc.nextInt();
 
         if (choice == 1) {
-            new ProfileMenuDAO().delProfile(user);
+            profileDAOInterface.delProfile(user);
         } else if (choice == 2) {
-            AccountMenu.create(user);
+            accountMenuInterface.run();
 
         } else {
             System.out.println("Выберите правильный пункт меню");
@@ -79,5 +84,20 @@ public class ProfileMenu {
             } catch (Exception e) {
             }
         }
+    }
+
+    @Autowired
+    public void setAccountMenuInterface(AccountMenuInterface accountMenuInterface) {
+        this.accountMenuInterface = accountMenuInterface;
+    }
+
+    @Autowired
+    public void setProfileDAOInterface(ProfileDAOInterface profileDAOInterface) {
+        this.profileDAOInterface = profileDAOInterface;
+    }
+
+    @Autowired
+    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
+        this.mainMenuInterface = mainMenuInterface;
     }
 }

@@ -1,49 +1,64 @@
 package task23.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import task23.DAO.OrderDAO;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Component
 @Entity
+@Table(name = "orders")
 public class Order {
-
     @Id
-    private int id;
-    @Column
-    private String name;
-    @Column
-    private String lastName;
-    @Column
-    private int orderNumber;
-    @Column
-    private String nameProduct;
-    @Column
-    private double price;
-    @Column
-    private String category;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer orderNumber;
+
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Cart> products;
     @Column
     private String status;
+    @ManyToOne
+    @JoinColumn
+    private ListOrders listOrders;
 
-    public Order(int id, String name, String lastName, int orderNumber,
-                 String nameProduct, double price, String category, String status) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
+    public Order(Integer orderNumber,  String status) {
         this.orderNumber = orderNumber;
-        this.nameProduct = nameProduct;
-        this.price = price;
-        this.category = category;
         this.status = status;
     }
 
     public Order() {
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Cart> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Cart> products) {
+        this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderNumber=" + orderNumber +
+                ", products=" + products +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

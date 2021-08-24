@@ -1,16 +1,17 @@
 package task23.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.SQLException;
 
-@Getter
-@Setter
-@ToString
-@Entity
 
+
+@Component
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -78,5 +79,16 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
