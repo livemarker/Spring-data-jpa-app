@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 @Table(name = "category_products")
 public class CategoryProducts {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

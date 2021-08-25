@@ -9,18 +9,20 @@ import task23.entity.User;
 import task23.menus.intefaces.AccountMenuInterface;
 import task23.menus.intefaces.MainMenuInterface;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 @Component
 public class MainMenu implements MainMenuInterface {
     private Scanner sc = new Scanner(System.in);
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static User user;
-
 
     private UserDAOInterface userDAOInterface;
     private AccountMenuInterface accountMenuInterface;
-
 
     public void run() throws SQLException {
         System.out.println("Добро пожаловать в ВТБ магазин");
@@ -37,7 +39,10 @@ public class MainMenu implements MainMenuInterface {
         if (choice == 1) {
             authorization();
         } else if (choice == 2) {
-            registration();
+            try {
+                registration();
+            } catch (Exception ignored) {
+            }
         } else if (choice == 3) {
             System.exit(1);
         } else {
@@ -59,17 +64,17 @@ public class MainMenu implements MainMenuInterface {
         accountMenuInterface.run(user);
     }
 
-    private void registration() throws SQLException {
+    private void registration() throws SQLException, IOException {
         System.out.println("Введите login: ");
         String login = sc.next();
         System.out.println("Введите имя: ");
-        String name = sc.next();
+        String name = br.readLine();
         System.out.println("Введите Фамилию: ");
-        String lastName = sc.next();
+        String lastName = br.readLine();
         System.out.println("Введите адрес: ");
-        String address = sc.next();
+        String address = br.readLine();
         System.out.println("Введите номер телефона: ");
-        String phone = sc.next();
+        String phone = br.readLine();
 
         User user = new User(login, name, lastName, address, phone);
         userDAOInterface.save(user);
@@ -87,9 +92,5 @@ public class MainMenu implements MainMenuInterface {
     @Autowired
     public void setAccountMenuInterface(AccountMenuInterface accountMenuInterface) {
         this.accountMenuInterface = accountMenuInterface;
-    }
-
-    public static User getUser(){
-       return user;
     }
 }

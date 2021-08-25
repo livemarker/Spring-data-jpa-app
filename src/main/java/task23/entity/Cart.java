@@ -13,20 +13,19 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column
-    private String name;
+    private String nameProduct;
     @Column
     private double price;
-    @Column
-    private String category;
     @ManyToOne
     @JoinColumn
     private Order order;
 
-    public Cart(Integer id, String name, double price, String category) {
+    public Cart(Integer id, String namepProduct, double price, Order order) {
         this.id = id;
-        this.name = name;
+        this.nameProduct = namepProduct;
         this.price = price;
-        this.category = category;
+        this.order = order;
+
     }
 
     public Cart() {
@@ -41,11 +40,11 @@ public class Cart {
     }
 
     public String getName() {
-        return name;
+        return nameProduct;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String namepProduct) {
+        this.nameProduct = namepProduct;
     }
 
     public double getPrice() {
@@ -56,21 +55,14 @@ public class Cart {
         this.price = price;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                '}';
+        return
+                "id=" + id +
+                        ", namepProduct='" + nameProduct + '\'' +
+                        ", price=" + price +
+                        ", order=" + order +
+                        '}';
     }
 
     public void setId(Integer id) {

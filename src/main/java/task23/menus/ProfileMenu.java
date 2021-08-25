@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import task23.DAO.interfaces.ProfileDAOInterface;
 import task23.entity.User;
 import task23.menus.intefaces.AccountMenuInterface;
-import task23.menus.intefaces.MainMenuInterface;
 import task23.menus.intefaces.ProfileMenuInterface;
 
 import java.sql.SQLException;
@@ -16,10 +15,10 @@ public class ProfileMenu implements ProfileMenuInterface {
     private Scanner sc = new Scanner(System.in);
     private AccountMenuInterface accountMenuInterface;
     private ProfileDAOInterface profileDAOInterface;
-    private MainMenuInterface mainMenuInterface;
-    private User user ;
+    private User user;
+
     public void run(User user) throws SQLException {
-        this.user=user;
+        this.user = user;
         System.out.println("-------------------");
         System.out.println("Информация о профиле:");
         System.out.println(user.toString());
@@ -31,7 +30,7 @@ public class ProfileMenu implements ProfileMenuInterface {
         int choice = sc.nextInt();
         if (choice == 1) {
             changeInfo();
-            run( user);
+            run(user);
         } else if (choice == 2) {
             delProfile();
         } else if (choice == 3) {
@@ -76,7 +75,6 @@ public class ProfileMenu implements ProfileMenuInterface {
         if (choice == 1) {
             profileDAOInterface.delProfile(user);
         } else if (choice == 2) {
-            accountMenuInterface.run(user);
 
         } else {
             System.out.println("Выберите правильный пункт меню");
@@ -95,10 +93,5 @@ public class ProfileMenu implements ProfileMenuInterface {
     @Autowired
     public void setProfileDAOInterface(ProfileDAOInterface profileDAOInterface) {
         this.profileDAOInterface = profileDAOInterface;
-    }
-
-    @Autowired
-    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
-        this.mainMenuInterface = mainMenuInterface;
     }
 }

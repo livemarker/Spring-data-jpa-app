@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import task23.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserDAORepository extends JpaRepository<User, String> {
+
     User getByLogin(String id);
 }

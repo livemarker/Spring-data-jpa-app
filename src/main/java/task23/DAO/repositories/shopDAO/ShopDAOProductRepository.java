@@ -1,7 +1,6 @@
-package task23.DAO.repositories;
+package task23.DAO.repositories.shopDAO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import task23.entity.CategoryProducts;
 import task23.entity.Product;
 
 import java.util.List;

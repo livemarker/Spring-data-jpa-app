@@ -2,11 +2,9 @@ package task23.menus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import task23.DAO.interfaces.OrderDAOInterface;
 import task23.DAO.interfaces.ShopDAOInterface;
-import task23.entity.CategoryProducts;
-import task23.entity.Product;
-import task23.entity.User;
-import task23.menus.intefaces.AccountMenuInterface;
+import task23.entity.*;
 import task23.menus.intefaces.CartMenuInterface;
 import task23.menus.intefaces.ShopMenuInterface;
 
@@ -17,20 +15,11 @@ import java.util.*;
 public class ShopMenu implements ShopMenuInterface {
     private Scanner sc = new Scanner(System.in);
     private List<Product> listProductsTemp = new ArrayList<>();
-    private AccountMenuInterface accountMenuInterface;
     private ShopDAOInterface shopDAOInterface;
     private CartMenuInterface cartMenuInterface;
+    private OrderDAOInterface orderDAOInterface;
     private User user;
 
-    @Autowired
-    public ShopMenu(AccountMenuInterface accountMenuInterface,
-                    ShopDAOInterface shopDAOInterface,
-                    CartMenuInterface cartMenuInterface) {
-
-        this.accountMenuInterface = accountMenuInterface;
-        this.shopDAOInterface = shopDAOInterface;
-        this.cartMenuInterface = cartMenuInterface;
-    }
 
     public void run(User user) throws SQLException {
         this.user = user;
@@ -49,19 +38,17 @@ public class ShopMenu implements ShopMenuInterface {
         for (int i = 0; i < listCategory.size(); i++) {
             category.add(listCategory.get(i).getCategories());
         }
-
         List<String> strings = new ArrayList<>(category);
 
         for (int i = 0; i < strings.size(); i++) {
             System.out.println(i + ".     " + strings.get(i));
         }
-
         System.out.println();
         System.out.println("Для перехода назад цифра -1");
         int choice = sc.nextInt();
 
         if (choice == -1) {
-            accountMenuInterface.run(user);
+
         } else {
             String choiceCategory = strings.get(choice);
             getProducts(choiceCategory);
@@ -87,10 +74,38 @@ public class ShopMenu implements ShopMenuInterface {
         }
     }
 
-    private void addToCart(int index) {
+    private void addToCart(int index) throws SQLException {
+        String status = "не оплачено";
 
-        cartMenuInterface.getCart().add(listProductsTemp.get(index - 1));
+        Cart cart;
+        Order order = new Order(0, user.getLogin(), status);
+        order.setProducts(
+                Collections.singletonList(
+                        cart = new Cart(
+                                null,
+                                listProductsTemp.get(index - 1).getName(),
+                                listProductsTemp.get(index - 1).getPrice(),
+                                order)));
+
+        cartMenuInterface.getCart(user).add(cart);
+        orderDAOInterface.addOrder(order);
+
         System.out.println(listProductsTemp.get(index - 1).toString() + " добавлен в корзину");
         System.out.println();
+    }
+
+    @Autowired
+    public void setOrderDAOInterface(OrderDAOInterface orderDAOInterface) {
+        this.orderDAOInterface = orderDAOInterface;
+    }
+
+    @Autowired
+    public void setShopDAOInterface(ShopDAOInterface shopDAOInterface) {
+        this.shopDAOInterface = shopDAOInterface;
+    }
+
+    @Autowired
+    public void setCartMenuInterface(CartMenuInterface cartMenuInterface) {
+        this.cartMenuInterface = cartMenuInterface;
     }
 }

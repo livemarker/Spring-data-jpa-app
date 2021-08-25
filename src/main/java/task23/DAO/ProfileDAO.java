@@ -14,11 +14,11 @@ public class ProfileDAO implements ProfileDAOInterface {
     private MainMenuInterface mainMenuInterface;
     private ProfileDAORepository profileDAORepository;
 
-    public ProfileDAO(MainMenuInterface mainMenuInterface) throws SQLException {
+    public ProfileDAO(MainMenuInterface mainMenuInterface) {
         this.mainMenuInterface = mainMenuInterface;
     }
 
-    public ProfileDAO() throws SQLException {
+    public ProfileDAO() {
     }
 
     public void changeInfo(User user) throws SQLException {

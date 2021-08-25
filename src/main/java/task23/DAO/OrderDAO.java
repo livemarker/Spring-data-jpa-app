@@ -1,75 +1,69 @@
 package task23.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import task23.DAO.interfaces.OrderDAOInterface;
-import task23.DAO.repositories.ListOrdersDAORepository;
+
+import task23.DAO.repositories.CartDAORepository;
 import task23.DAO.repositories.OrderDAORepository;
-import task23.entity.ListOrders;
-import task23.entity.Product;
-import task23.entity.User;
-import task23.entity.Order;
 
+import task23.entity.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class OrderDAO implements OrderDAOInterface {
-    private ListOrdersDAORepository listOrdersDAORepository;
+
     private OrderDAORepository orderDAORepository;
+    private CartDAORepository cartDAORepository;
 
-    public OrderDAO() throws SQLException {
+    private String status = "не оплачено";
+    private String newStatus = "Подготовка к отправке";
+
+    public OrderDAO() {
     }
 
-    public List<Order> getOrderList(User user) throws SQLException {
-        List<Order> orders = new ArrayList<>();
-//        String tableName = user.getFirstName() + "_" + user.getLastName();
-//
-//        Statement statement = connection.createStatement();
-//        ResultSet rs = statement.executeQuery("SELECT * FROM " + tableName + ";");
-//
-//        Order order;
-//        while (rs.next()) {
-//            order = new Order(rs.getInt(1),
-//                    rs.getString(2),
-//                    rs.getDouble(3),
-//                    rs.getString(4),
-//                    rs.getString(5));
-//            orders.add(order);
-//        }
-        return orders;
+    public List<Order> getOrders(User user) {
+        return orderDAORepository.getAllByLoginIs(user.getLogin());
     }
 
-    public void addOrder(ListOrders listOrders,Order order) throws SQLException {
-        listOrdersDAORepository.save(listOrders);
+    public void addOrder(Order order) {
         orderDAORepository.save(order);
-//
-//
-//        String tableName = user.getFirstName() + "_" + user.getLastName();
-//
-//        Statement statement = connection.createStatement();
-//        ResultSet resultSet = statement.executeQuery("SELECT * FROM  users " +
-//                "WHERE \"Имя\"=\'" + user.getFirstName() + "\' " +
-//                "AND  \"Фамилия\"=\'" + user.getLastName() + "\'");
-//
-//        String create =
-//                " create table if not exists " + tableName + "(order_number INT, name_Product VARCHAR, price DECIMAL, category VARCHAR, status VARCHAR);";
-//        PreparedStatement pss = connection.prepareStatement(create);
-//        pss.executeUpdate();
-//
-//        int id = generator(tableName);
-//        String add = " INSERT INTO " + tableName + " values (?,?,?,?,?);";
-//        while (resultSet.next()) {
-//            for (Product p : products) {
-//                PreparedStatement ps = connection.prepareStatement(add);
-//                ps.setInt(1, id);
-//                ps.setString(2, p.getName());
-//                ps.setDouble(3, p.getPrice());
-//                ps.setString(4, p.getCategory());
-//                ps.setString(5, "Подготовка к отправке");
-//                ps.executeUpdate();
-          //  }
-       // }
+    }
+
+    public void changeStatus(String login) {
+        orderDAORepository.changeStatus(login, status, newStatus);
+    }
+
+    public List<Cart> getUserCart(String login) {
+        List<Order> temp = orderDAORepository.getAllByOrder_LoginAndOrder_Status(login, status);
+
+        List<Cart> userCart = new ArrayList<>();
+        for (int i = 0; i < temp.size(); i++) {
+            userCart.add(temp.get(i).getProducts().get(0));
+        }
+        return userCart;
+    }
+
+    @Transactional
+    public void delCart(String login) {
+        List<Order> temp = orderDAORepository.getAllByOrder_LoginAndOrder_Status(login, status);
+
+        for (Order o : temp) {
+            cartDAORepository.deleteCartByOrderIs(o);
+        }
+        orderDAORepository.delAllByOrder_LoginAndOrder_Status(login, status);
+    }
+
+    @Autowired
+    public void setOrderDAORepository(OrderDAORepository orderDAORepository) {
+        this.orderDAORepository = orderDAORepository;
+    }
+
+    @Autowired
+    public void setCartDAORepository(CartDAORepository cartDAORepository) {
+        this.cartDAORepository = cartDAORepository;
     }
 }

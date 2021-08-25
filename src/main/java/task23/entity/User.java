@@ -1,13 +1,9 @@
 package task23.entity;
 
-import lombok.*;
-import org.hibernate.annotations.Fetch;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.SQLException;
-
-
 
 @Component
 @Entity
@@ -33,7 +29,7 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(String login) throws SQLException {
+    public User(String login) {
         this.login = login;
 
     }

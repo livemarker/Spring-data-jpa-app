@@ -11,30 +11,32 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer orderNumber;
+    private Integer id;
 
-    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @Column
+    private String login;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cart> products;
     @Column
     private String status;
-    @ManyToOne
-    @JoinColumn
-    private ListOrders listOrders;
 
-    public Order(Integer orderNumber,  String status) {
-        this.orderNumber = orderNumber;
+
+    public Order(Integer id, String login, String status) {
+        this.login = login;
+        this.id = id;
         this.status = status;
     }
 
     public Order() {
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
+    public int getId() {
+        return id;
     }
 
-    public void setOrderNumber(int orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setId(int orderNumber) {
+        this.id = orderNumber;
     }
 
     public String getStatus() {
@@ -53,12 +55,24 @@ public class Order {
         this.products = products;
     }
 
+    public void setOrderNumber(Integer orderNumber) {
+        this.id = orderNumber;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
-                "orderNumber=" + orderNumber +
-                ", products=" + products +
-                ", status='" + status + '\'' +
-                '}';
+        return
+                "orderNumber=" + id +
+                        ", login='" + login + '\'' +
+                        ", status='" + status + '\'' +
+                        '}';
     }
 }

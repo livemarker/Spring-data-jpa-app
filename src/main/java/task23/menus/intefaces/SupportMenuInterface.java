@@ -4,9 +4,7 @@ import task23.entity.User;
 
 import java.sql.SQLException;
 
-public interface OrderMenuInterface {
+public interface SupportMenuInterface {
 
     void run(User user) throws SQLException;
-
-    void buy(User user);
 }

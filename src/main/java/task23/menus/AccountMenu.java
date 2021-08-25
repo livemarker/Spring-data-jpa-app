@@ -2,7 +2,7 @@ package task23.menus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import task23.DAO.interfaces.ProfileDAOInterface;
+
 import task23.entity.User;
 import task23.menus.intefaces.*;
 
@@ -12,18 +12,14 @@ import java.util.Scanner;
 @Component
 public class AccountMenu implements AccountMenuInterface {
 
-
-    private MainMenuInterface mainMenuInterface;
     private AdminMenuInterface adminMenuInterface;
     private ShopMenuInterface shopMenuInterface;
     private CartMenuInterface cartMenuInterface;
     private OrderMenuInterface orderMenuInterface;
     private ProfileMenuInterface profileMenuInterface;
+    private SupportMenuInterface supportMenuInterface;
 
     private Scanner sc = new Scanner(System.in);
-    private static User user;
-
-
 
     public void run(User user) throws SQLException {
         System.out.println("-------------------------");
@@ -48,12 +44,16 @@ public class AccountMenu implements AccountMenuInterface {
         } else if (choice == 4) {
             orderMenuInterface.run(user);
         } else if (choice == 5) {
-            //  SupportMenu.create(user).run();
+            supportMenuInterface.run(user);
         } else if (choice == 6) {
             if (user.getLogin().equals("admin")) {
                 adminMenuInterface.run();
             } else {
                 System.out.println("Вы не являетесь администратором, выберите другой пункт меню");
+                try {
+                    Thread.sleep(200);
+                } catch (Exception ignored) {
+                }
                 run(user);
             }
         } else if (choice == -1) {
@@ -62,10 +62,10 @@ public class AccountMenu implements AccountMenuInterface {
             System.out.println("Выберите правильный пункт меню");
             try {
                 Thread.sleep(200);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
-            run(user);
         }
+        run(user);
     }
 
     @Autowired
@@ -94,7 +94,7 @@ public class AccountMenu implements AccountMenuInterface {
     }
 
     @Autowired
-    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
-        this.mainMenuInterface = mainMenuInterface;
+    public void setSupportMenuInterface(SupportMenuInterface supportMenuInterface) {
+        this.supportMenuInterface = supportMenuInterface;
     }
 }

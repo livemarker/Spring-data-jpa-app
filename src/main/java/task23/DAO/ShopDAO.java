@@ -1,17 +1,13 @@
 package task23.DAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import task23.DAO.interfaces.ShopDAOInterface;
-import task23.DAO.repositories.ShopDAOCategoryRepository;
+import task23.DAO.repositories.shopDAO.ShopDAOCategoryRepository;
 import task23.entity.CategoryProducts;
 import task23.entity.Product;
-import task23.DAO.repositories.ShopDAOProductRepository;
+import task23.DAO.repositories.shopDAO.ShopDAOProductRepository;
 
-import javax.persistence.EntityManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +15,6 @@ import java.util.List;
 public class ShopDAO implements ShopDAOInterface {
 
     private ShopDAOProductRepository shopDAOProductRepository;
-
     private ShopDAOCategoryRepository shopDAOCategoryRepository;
 
     @Autowired
@@ -48,13 +43,10 @@ public class ShopDAO implements ShopDAOInterface {
 
         List<Product> listProducts = new ArrayList<>();
 
-        for (int i = 0; i <list.size() ; i++) {
+        for (int i = 0; i < list.size(); i++) {
             listProducts.add(shopDAOProductRepository
                     .getAllByCategory_Id(list.get(i).getId()).get(0));
-
         }
-
         return listProducts;
     }
-
 }

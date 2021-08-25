@@ -1,6 +1,5 @@
 package task23.entity;
 
-
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -65,8 +64,8 @@ public class Product {
     @Override
     public String toString() {
         return
-                "/name='" + name + '\'' +
-                ", price=" + price;
+                "name='" + name + '\'' +
+                        ", price=" + price;
     }
 }
 

@@ -1,12 +1,10 @@
 package task23.menus;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task23.DAO.interfaces.OrderDAOInterface;
-import task23.entity.ListOrders;
-import task23.entity.Product;
+
 import task23.entity.User;
-import task23.menus.intefaces.AccountMenuInterface;
-import task23.menus.intefaces.MainMenuInterface;
 import task23.menus.intefaces.OrderMenuInterface;
 import task23.entity.Order;
 
@@ -17,56 +15,45 @@ import java.util.Scanner;
 @Service
 public class OrderMenu implements OrderMenuInterface {
 
-    private AccountMenuInterface accountMenuInterface;
     private OrderDAOInterface orderDAOInterface;
-    private MainMenuInterface mainMenuInterface;
     private Scanner sc = new Scanner(System.in);
     private User user;
 
-
     @Override
     public void run(User user) throws SQLException {
+        this.user = user;
         System.out.println("----------------");
         System.out.println("Меню заказов");
-        getOrder();
+        getOrders();
         System.out.println();
         System.out.println("Для возврата в меню аккаунта: -1");
         int choice = sc.nextInt();
         if (choice == -1) {
-            accountMenuInterface.run(user);
+
         } else {
             run(user);
         }
     }
 
-    private void getOrder() throws SQLException {
-        List<Order> list = orderDAOInterface.getOrderList(user);
-        int delitel = 1;
+    private void getOrders() throws SQLException {
+        List<Order> list = orderDAOInterface.getOrders(user);
+
         for (int i = 0; i < list.size(); i++) {
-            if (delitel != list.get(i).getOrderNumber()) {
-                System.out.println();
-            }
-            System.out.print(list.get(i).toString());
-            delitel = list.get(i).getOrderNumber();
+            System.out.println("id = " + list.get(i).getId() +
+                    ", login = " + list.get(i).getLogin() +
+                    ", status = " + list.get(i).getStatus() +
+                    ", nameProduct = " + list.get(i).getProducts().get(0).getName() +
+                    ", price = " + list.get(i).getProducts().get(0).getPrice());
         }
     }
 
     @Override
-    public void addOrder(List<Product> products) {
-        //new ListOrders(null,user.getLogin(),)
-       // new Order(null,products,"Подготовка к отправке");
-        //orderDAOInterface.addOrder(user, products);
+    public void buy(User user) {
+        orderDAOInterface.changeStatus(user.getLogin());
     }
 
-    public void setAccountMenuInterface(AccountMenuInterface accountMenuInterface) {
-        this.accountMenuInterface = accountMenuInterface;
-    }
-
+    @Autowired
     public void setOrderDAOInterface(OrderDAOInterface orderDAOInterface) {
         this.orderDAOInterface = orderDAOInterface;
-    }
-
-    public void setMainMenuInterface(MainMenuInterface mainMenuInterface) {
-        this.mainMenuInterface = mainMenuInterface;
     }
 }
