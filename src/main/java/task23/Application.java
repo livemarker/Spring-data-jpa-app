@@ -17,7 +17,5 @@ public class Application {
 
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
         ctx.getBean(MainMenu.class).run();
-
     }
-
 }
