@@ -9,22 +9,72 @@
     <changeSet id="1_add-users" author="live">
         <createTable tableName="users">
             <column name="login" type="varchar">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="first_name" type="varchar" />
-            <column name="last_name" type="varchar" />
-            <column name="address" type="varchar" />
-            <column name="phone_number" type="varchar" />
+            <column name="first_name" type="varchar"/>
+            <column name="last_name" type="varchar"/>
+            <column name="address" type="varchar"/>
+            <column name="phone_number" type="varchar"/>
         </createTable>
 
-        <addUniqueConstraint tableName="users" columnNames="login" />
+        <addUniqueConstraint tableName="users" columnNames="login"/>
 
         <sql>
             CREATE SEQUENCE hibernate_sequence;
 
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('admin', '1', '2', '3', '4');
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('q', 'fast access', 'q', 'q', 'q');
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('Никита', 'Никита', 'Ел', 'Королев', '123321');
+            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('admin', '1', '2', '3',
+            '4');
+            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('q', 'fast access', 'q',
+            'q', 'q');
+            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('Никита', 'Никита', 'Ел',
+            'Королев', '123321');
+        </sql>
+
+    </changeSet>
+    <changeSet id="2_add-tickets" author="live">
+        <createTable tableName="tickets">
+            <column name="id" type="varchar">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar"/>
+            <column name="topic" type="varchar"/>
+            <column name="text" type="varchar"/>
+            <column name="status" type="varchar"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="tickets" columnNames="id"/>
+
+        <sql>
+            INSERT INTO public.tickets (id, login, topic, text, status) VALUES (56, 'Никита', 'магазин', 'не работает,
+            помогите', 'в процессе рассмотрения');
+        </sql>
+
+    </changeSet>
+
+
+    <changeSet id="3_add-product" author="live">
+        <createTable tableName="products">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar"/>
+            <column name="price" type="numeric"/>
+            <column name="category_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="products" baseColumnNames="category_id"
+                                 constraintName="products_category_id_fk"
+                                 referencedTableName="category"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <sql>
+            INSERT INTO public.products (id, name, price, category_id) VALUES (41, 'Торт наполеон', 500, 40);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (43, 'Торт киевский', 400, 42);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (45, 'мыло с ромашкой', 50, 44);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (47, 'Стихи', 240, 46);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (49, 'Толстой "Война и мир"', 700, 48);
         </sql>
 
     </changeSet>
