@@ -41,8 +41,8 @@ public class OrderDAO implements OrderDAOInterface {
         List<Order> temp = orderDAORepository.getAllByOrder_LoginAndOrder_Status(login, status);
 
         List<Cart> userCart = new ArrayList<>();
-        for (int i = 0; i < temp.size(); i++) {
-            userCart.add(temp.get(i).getProducts().get(0));
+        for (Order order : temp) {
+            userCart.add(order.getProducts().get(0));
         }
         return userCart;
     }
@@ -56,6 +56,7 @@ public class OrderDAO implements OrderDAOInterface {
         }
         orderDAORepository.delAllByOrder_LoginAndOrder_Status(login, status);
     }
+
 
     @Autowired
     public void setOrderDAORepository(OrderDAORepository orderDAORepository) {

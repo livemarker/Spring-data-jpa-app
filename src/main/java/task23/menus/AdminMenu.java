@@ -9,7 +9,9 @@ import task23.menus.intefaces.AdminMenuInterface;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -38,8 +40,10 @@ public class AdminMenu implements AdminMenuInterface {
                 System.out.println("Укажите категорию:");
                 String category = br.readLine();
 
-                CategoryProducts categoryProducts = new CategoryProducts(null, category);
-                categoryProducts.setCategoryList(Collections.singletonList(new Product(null, name, price, categoryProducts)));
+
+                CategoryProducts categoryProducts = getCategory(category);
+
+                categoryProducts.setCategoryList(addProduct(category,new Product(null, name, price, categoryProducts)));
 
                 shopDAOInterface.add(categoryProducts);
                 System.out.println("Товар добавлен");
@@ -51,6 +55,28 @@ public class AdminMenu implements AdminMenuInterface {
         } else {
             run();
         }
+    }
+
+    private CategoryProducts getCategory(String category) {
+        CategoryProducts categoryProducts;
+        List<CategoryProducts> categories = shopDAOInterface.getCategory(category);
+        if (!categories.isEmpty()) {
+            categoryProducts = categories.get(0);
+        } else {
+            categoryProducts = new CategoryProducts(null, category);
+        }
+        return categoryProducts;
+    }
+    private List<Product> addProduct(String category,Product product){
+        List<Product> products=shopDAOInterface.getProducts(category);
+        if (!products.isEmpty()) {
+            products.add(product);
+        } else {
+            products=new ArrayList<>();
+            products.add(product);
+        }
+        return products;
+
     }
 
     @Autowired

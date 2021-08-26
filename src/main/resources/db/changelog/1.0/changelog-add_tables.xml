@@ -31,6 +31,7 @@
         </sql>
 
     </changeSet>
+
     <changeSet id="2_add-tickets" author="live">
         <createTable tableName="tickets">
             <column name="id" type="varchar">
@@ -51,8 +52,25 @@
 
     </changeSet>
 
+    <changeSet id="3_add-category" author="live">
+        <createTable tableName="category">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="categories" type="varchar"/>
+        </createTable>
 
-    <changeSet id="3_add-product" author="live">
+        <addUniqueConstraint tableName="category" columnNames="id"/>
+
+        <sql>
+            INSERT INTO public.category (id, categories) VALUES (40, 'торты');
+            INSERT INTO public.category (id, categories) VALUES (44, 'мыло');
+            INSERT INTO public.category (id, categories) VALUES (46, 'книги');
+        </sql>
+
+    </changeSet>
+
+    <changeSet id="4_add-product" author="live">
         <createTable tableName="products">
             <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
@@ -71,10 +89,56 @@
 
         <sql>
             INSERT INTO public.products (id, name, price, category_id) VALUES (41, 'Торт наполеон', 500, 40);
-            INSERT INTO public.products (id, name, price, category_id) VALUES (43, 'Торт киевский', 400, 42);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (43, 'Торт киевский', 400, 40);
             INSERT INTO public.products (id, name, price, category_id) VALUES (45, 'мыло с ромашкой', 50, 44);
             INSERT INTO public.products (id, name, price, category_id) VALUES (47, 'Стихи', 240, 46);
-            INSERT INTO public.products (id, name, price, category_id) VALUES (49, 'Толстой "Война и мир"', 700, 48);
+            INSERT INTO public.products (id, name, price, category_id) VALUES (49, 'Толстой "Война и мир"', 700, 46);
+        </sql>
+
+    </changeSet>
+
+    <changeSet id="5_add-orders" author="live">
+        <createTable tableName="orders">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar"/>
+            <column name="status" type="varchar"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="orders" columnNames="id"/>
+
+        <sql>
+            INSERT INTO public.orders (id, login, status) VALUES (50, 'Никита', 'Подготовка к отправке');
+            INSERT INTO public.orders (id, login, status) VALUES (52, 'Никита', 'Подготовка к отправке');
+            INSERT INTO public.orders (id, login, status) VALUES (54, 'Никита', 'Подготовка к отправке');
+            INSERT INTO public.orders (id, login, status) VALUES (57, 'q', 'не оплачено');
+        </sql>
+
+    </changeSet>
+
+    <changeSet id="6_add-cart" author="live">
+        <createTable tableName="cart">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name_product" type="varchar"/>
+            <column name="price" type="numeric"/>
+            <column name="order_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="cart" baseColumnNames="order_id"
+                                 constraintName="cart_orders_id_fk"
+                                 referencedTableName="orders"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <sql>
+            INSERT INTO public.cart (id, name_product, price, order_id) VALUES (51, 'Торт наполеон', 500, 50);
+            INSERT INTO public.cart (id, name_product, price, order_id) VALUES (53, 'Торт киевский', 400, 52);
+            INSERT INTO public.cart (id, name_product, price, order_id) VALUES (55, 'Толстой "Война и мир"', 700, 54);
+            INSERT INTO public.cart (id, name_product, price, order_id) VALUES (58, 'мыло с ромашкой', 50, 57);
         </sql>
 
     </changeSet>

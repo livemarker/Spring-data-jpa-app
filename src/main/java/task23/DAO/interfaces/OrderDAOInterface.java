@@ -18,4 +18,5 @@ public interface OrderDAOInterface {
     List<Cart> getUserCart(String login);
 
     void delCart(String login);
+
 }
