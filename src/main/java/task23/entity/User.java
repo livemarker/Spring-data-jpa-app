@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class User {
 
     @Id
+    @Column(unique = true)
     private String login;
     @Column
     private String firstName;

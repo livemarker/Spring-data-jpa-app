@@ -4,3 +4,6 @@ spring:
     username: postgres
     password: 123321
     driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: classpath:/db/changelog/db-changelog-master.yaml
+    enabled: true
