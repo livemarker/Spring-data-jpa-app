@@ -13,7 +13,8 @@ public interface ShopDAOInterface {
 
     List<Product> getProducts(String category);
 
-    List<CategoryProducts> getCategory (String category);
+    List<CategoryProducts> getCategory(String category);
 
+    Product getOneProduct(int id);
 
 }

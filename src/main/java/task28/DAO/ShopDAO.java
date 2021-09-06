@@ -49,6 +49,10 @@ public class ShopDAO implements ShopDAOInterface {
         return listProducts;
     }
 
+    public Product getOneProduct(int id) {
+        return shopDAOProductRepository.getByIdIs(id);
+    }
+
     public List<CategoryProducts> getCategory(String category) {
         return shopDAOCategoryRepository.getAllByCategoriesIs(category);
     }

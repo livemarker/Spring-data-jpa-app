@@ -3,10 +3,7 @@ package task28.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import task28.DAO.interfaces.ShopDAOInterface;
 
 @Controller
@@ -18,7 +15,7 @@ public class ShopController {
         model.addAttribute("category", shopDAOInterface.getAllCategoryProducts());
         return "shop";
     }
-    @RequestMapping(value = "/{category}", method = RequestMethod.GET)
+    @GetMapping("/{category}")
     public String getProduct(@PathVariable("category") String category, Model model) {
         model.addAttribute("products", shopDAOInterface.getProducts(category));
         return "products";

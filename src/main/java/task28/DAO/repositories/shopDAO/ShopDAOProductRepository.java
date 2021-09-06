@@ -10,4 +10,5 @@ public interface ShopDAOProductRepository extends JpaRepository<Product, Integer
 
     List<Product> getAllByCategory_Id(int id);
 
+    Product getByIdIs(int id);
 }
