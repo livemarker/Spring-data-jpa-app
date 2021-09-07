@@ -15,7 +15,7 @@ public class OrderController {
     private OrderDAOInterface orderDAOInterface;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String getCart(Model model) throws SQLException {
+    public String getOrders(Model model) throws SQLException {
         model.addAttribute("orders", orderDAOInterface.getOrders(new User("Никита")));
         return "order";
     }
