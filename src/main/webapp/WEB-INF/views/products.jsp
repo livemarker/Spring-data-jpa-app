@@ -18,7 +18,7 @@
 <table border="1px">
     <c:forEach var="product" items="${products}">
         <br>
-        <a href="<c:url value="/product?id=${product.id}"/>">${product.id}  ${product.name} ${product.price}  </a>
+        <a href="<c:url value="/product?id=${product.id}"/>">${product.id} ${product.name} ${product.price}  </a>
         <br>
     </c:forEach>
     <br>

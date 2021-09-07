@@ -12,7 +12,9 @@
 
 </head>
 <body>
-${oneProduct.id}   ${oneProduct.name}   ${oneProduct.price}
+${oneProduct.id} ${oneProduct.name} ${oneProduct.price}
+<br>
+<br>
 <br>
 Комментарии:
 

@@ -22,7 +22,6 @@ public class ProductController {
 
         model.addAttribute("oneProduct", shopDAOInterface.getOneProduct(id));
         model.addAttribute("comments", commentDAOInterface.getAllByProductIdIs(id));
-        System.out.println(1111111 + " " + id);
         return "product";
     }
 

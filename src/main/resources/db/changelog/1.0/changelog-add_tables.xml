@@ -143,5 +143,25 @@
 
     </changeSet>
 
+    <changeSet id="7_add-comments" author="live">
+        <createTable tableName="comments">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="text" type="varchar"/>
+            <column name="product_id" type="int"/>
+        </createTable>
+
+        <sql>
+            INSERT INTO public.comments (id, text, product_id) VALUES (1, 'Очень вкусно', 41);
+            INSERT INTO public.comments (id, text, product_id) VALUES (2, 'понравился', 41);
+            INSERT INTO public.comments (id, text, product_id) VALUES (3, 'пойдет', 43);
+            INSERT INTO public.comments (id, text, product_id) VALUES (4, 'нормально', 45);
+            INSERT INTO public.comments (id, text, product_id) VALUES (5, 'советую', 47);
+            INSERT INTO public.comments (id, text, product_id) VALUES (6, 'ох, хорошо', 49);
+        </sql>
+
+    </changeSet>
+
 
 </databaseChangeLog>
