@@ -1,0 +1,80 @@
+### категории товаров
+GET http://localhost:8080/shop
+Content-Type: application/json
+
+### товары одной категории
+GET http://localhost:8080/cakes
+Content-Type: application/json
+
+### конкретный продукт с коментами
+GET http://localhost:8080/product?id=41
+Content-Type: application/json
+
+### удаление
+DELETE http://localhost:8080/product/delete?id=41
+Content-Type: application/json
+
+### изменение товара
+PUT http://localhost:8080/product/update?id=41
+Content-Type: application/json
+
+{
+  "name": "Торт тортовский",
+  "price": "600"
+}
+
+### все профили
+GET http://localhost:8080/profile/all
+Content-Type: application/json
+
+### создание профиля
+POST http://localhost:8080/profile/new
+Content-Type: application/json
+
+{
+  "login": "test",
+  "firstName": "testirovshik",
+  "lastName": "testirov",
+  "address": "moon",
+  "phoneNumber": "666666"
+}
+
+### 1 профиль "test"
+GET http://localhost:8080/profile?login=test
+Content-Type: application/json
+
+### удаление профиля "test"
+DELETE http://localhost:8080/profile/delete?login=test
+Content-Type: application/json
+
+### изменение профиля
+PUT http://localhost:8080/profile/update?login=test
+Content-Type: application/json
+
+{
+  "firstName": "123",
+  "lastName": "456",
+  "address": "789",
+  "phoneNumber": "101112"
+}
+
+### получение корзины пользователя
+GET http://localhost:8080/cart?login=Никита
+Content-Type: application/json
+
+### редактирование товаров корзины пользователя
+POST http://localhost:8080/cart/edit?id=2
+Content-Type: application/json
+
+{
+  "name": "test",
+  "price": "456"
+}
+
+### очистка корзины пользователя
+DELETE http://localhost:8080/cart/delete?login=Никита
+Content-Type: application/json
+
+### получение обращений в техподдержку
+GET http://localhost:8080/support?login=Никита
+Content-Type: application/json
