@@ -13,7 +13,7 @@ public class SupportController {
     private SupportDAOInterface supportDAOInterface;
 
     @RequestMapping(value = "/support", method = RequestMethod.GET)
-    public String getCart(Model model) {
+    public String getTickets(Model model) {
         model.addAttribute("supports", supportDAOInterface.getTicket(new User("Никита")));
         return "support";
     }
