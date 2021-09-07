@@ -12,7 +12,7 @@ public class ProfileController {
     private UserDAOInterface userDAOInterface;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String getCart(Model model) {
+    public String getProfile(Model model) {
         model.addAttribute("user", userDAOInterface.load("Никита"));
         return "profile";
     }
