@@ -14,6 +14,13 @@
 <body>
 ${oneProduct.id} ${oneProduct.name} ${oneProduct.price}
 <br>
+<form method="POST" action="/product?id=${oneProduct.id}" id="newPost" name ="newPost" enctype="multipart/form-data">
+    <input type="submit" id="btnAddPost" name="btnAddPost" value="добавить в корзину" onclick="" style="cursor:pointer"/>
+</form>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 Комментарии:

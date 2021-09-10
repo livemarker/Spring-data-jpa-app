@@ -21,7 +21,11 @@
         </tr>
     </c:forEach>
 </table>
-
+<br>
+<br>
+<form method="post" action="/cart" id="newPost" name ="newPost" enctype="multipart/form-data">
+    <input type="submit" id="btnAddPost" name="btnAddPost" value="очистить корзину" onclick="" style="cursor:pointer"/>
+</form>
 <br>
 <br>
 <a href="/account">назад</a>

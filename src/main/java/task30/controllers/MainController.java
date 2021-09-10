@@ -41,7 +41,7 @@ public class MainController {
                                 @RequestParam String phoneNumber) throws SQLException {
 
         userDAOInterface.save(new User(login, encoder.encode(password), firstName, lastName, address, phoneNumber));
-        return "redirect:/login";
+        return "redirect:/account";
     }
 
 

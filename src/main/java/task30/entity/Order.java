@@ -22,10 +22,11 @@ public class Order {
     private String status;
 
 
-    public Order(Integer id, String login, String status) {
+    public Order(Integer id, String login, String status,List<Cart> products) {
         this.login = login;
         this.id = id;
         this.status = status;
+        this.products=products;
     }
 
     public Order() {

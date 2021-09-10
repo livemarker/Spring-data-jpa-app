@@ -21,10 +21,12 @@ public class OrderController {
         model.addAttribute("orders", orderDAOInterface.getOrders(new User(userServiceInterface.getSecurityLogin())));
         return "order";
     }
+
     @Autowired
     public void setUserServiceInterface(UserServiceInterface userServiceInterface) {
         this.userServiceInterface = userServiceInterface;
     }
+
     @Autowired
     public void setOrderDAOInterface(OrderDAOInterface orderDAOInterface) {
         this.orderDAOInterface = orderDAOInterface;

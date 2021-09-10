@@ -24,7 +24,7 @@
 <a href="/support">тех. поддержка</a>
 <br>
 <br>
-<a href="/main">назад</a>
+<a href="/logout">назад</a>
 <br>
 <br>
 </body>

@@ -18,7 +18,7 @@
     <c:forEach var="shop" items="${category}">
         <tr>
             <td width="30%" valign="top">
-                <a href="${shop.categories}">${shop.categories}</a>
+                <a href="category?name=${shop.categories}">${shop.categories}</a>
             </td>
         </tr>
     </c:forEach>

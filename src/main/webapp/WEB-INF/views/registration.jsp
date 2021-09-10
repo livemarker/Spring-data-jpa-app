@@ -48,7 +48,7 @@
     <label for="phoneNumber"></label><input type="text" id="phoneNumber" name="phoneNumber" value="" placeholder="+795865458">
 
     <br>
-    <input type="submit" id="btnAddPost" name="btnAddPost" value="Add Post" onclick="" style="cursor:pointer"/>
+    <input type="submit" id="btnAddPost" name="btnAddPost" value="Зарегистрироваться" onclick="" style="cursor:pointer"/>
 </form>
 <a href="/main">назад</a>
 </body>

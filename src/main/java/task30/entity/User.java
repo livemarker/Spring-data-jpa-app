@@ -28,7 +28,7 @@ public class User {
 
     public User(String login, String password, String firstName, String lastName, String address, String phoneNumber) throws SQLException {
         this.login = login;
-        this.password=password;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

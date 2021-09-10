@@ -16,7 +16,6 @@ import java.util.Collections;
 
 @Component
 public class UserService implements UserDetailsService, UserServiceInterface {
-
     private UserDAORepository userDAORepository;
 
     @Autowired
@@ -33,7 +32,7 @@ public class UserService implements UserDetailsService, UserServiceInterface {
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
-    public String getSecurityLogin(){
+    public String getSecurityLogin() {
         UserDetails principal = (UserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()

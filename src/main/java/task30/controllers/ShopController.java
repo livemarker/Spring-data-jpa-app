@@ -14,13 +14,14 @@ public class ShopController {
     private ShopDAOInterface shopDAOInterface;
 
     @RequestMapping(value = "/shop", method = RequestMethod.GET)
-    public String getCategory( Model model) {
+    public String getCategory(Model model) {
         model.addAttribute("category", shopDAOInterface.getAllCategoryProducts());
         return "shop";
     }
-    @GetMapping("/{category}")
-    public String getProduct(@PathVariable("category") String category, Model model) {
-        List<Product>list =shopDAOInterface.getProducts(category);
+
+    @GetMapping("/category")
+    public String getProduct(@RequestParam("name") String category, Model model) {
+        List<Product> list = shopDAOInterface.getProducts(category);
         model.addAttribute("products", list);
         return "/products";
     }
