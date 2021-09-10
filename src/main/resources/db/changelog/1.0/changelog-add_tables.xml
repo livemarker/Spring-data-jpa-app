@@ -11,6 +11,7 @@
             <column name="login" type="varchar">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="password" type="varchar"/>
             <column name="first_name" type="varchar"/>
             <column name="last_name" type="varchar"/>
             <column name="address" type="varchar"/>
@@ -22,11 +23,11 @@
         <sql>
             CREATE SEQUENCE hibernate_sequence;
 
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('admin', '1', '2', '3',
+            INSERT INTO users (login, password, first_name, last_name, address, phone_number) VALUES ('admin','admin', '1', '2', '3',
             '4');
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('q', 'fast access', 'q',
+            INSERT INTO users (login, password, first_name, last_name, address, phone_number) VALUES ('q', '$2a$10$ENPNmIgjm9sc5BTVG.o/s.U7uEFwDHs/wB.FWRd20ysOnMUBGck66', 'fast access', 'q',
             'q', 'q');
-            INSERT INTO users (login, first_name, last_name, address, phone_number) VALUES ('Никита', 'Никита', 'Ел',
+            INSERT INTO users (login, password, first_name, last_name, address, phone_number) VALUES ('Никита', '$2a$10$qyhDg4g7CqWpBArbINS4auscZupifl2kL785CAutkIZ0ToPaQO.Ru', 'Никита', 'Ел',
             'Королев', '123321');
         </sql>
 

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    example login=Никита
+   КОРЗИНА
 </head>
 <body>
 <table border="1px">

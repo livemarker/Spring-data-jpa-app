@@ -7,46 +7,49 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 
 </head>
 <body>
 
-<br />
-<br>Введите логин
-<br>
-<div class="form-floating">
-    <input type="text" class="form-control"  placeholder="login">
-</div>
+<form method="POST" action="/registration" id="newPost" name ="newPost" enctype="multipart/form-data">
+    <br>Введите логин
+    <br>
+    <label for="login"></label><input type="text" id="login" name="login" placeholder="login">
 
-<br>Введите имя
-<br>
-<div class="form-floating">
-    <input type="text" class="form-control"  placeholder="иван">
-</div>
+    <br>Введите пароль
+    <br>
+    <label for="password"></label><input type="text" id="password" name="password" value="" placeholder="password">
 
-<br>Введите фамилию
-<br>
-<div class="form-floating">
-    <input type="text" class="form-control"  placeholder="Иванов">
-</div>
+    <br>Введите имя
+    <br>
 
-<br>Введите адресс
-<br>
-<div class="form-floating">
-    <input type="text" class="form-control"  placeholder="ул.горького д.5">
-</div>
+    <label for="firstName"></label><input type="text" id="firstName" name="firstName" value="" placeholder="иван">
 
-<br>Введите телефон
-<br>
-<div class="form-floating">
-    <input type="text" class="form-control" id="floatingInput" placeholder="+795865458">
-</div>
 
-<br>
-<a href="/account" >зарегистрироваться(не активна)</a>
+    <br>Введите фамилию
+    <br>
 
+    <label for="lastName"></label><input type="text" id="lastName" name="lastName" value="" placeholder="Иванов">
+
+
+    <br>Введите адресс
+    <br>
+
+    <label for="address"></label><input type="text" id="address" name="address" value="" placeholder="ул.горького д.5">
+
+
+    <br>Введите телефон
+    <br>
+
+    <label for="phoneNumber"></label><input type="text" id="phoneNumber" name="phoneNumber" value="" placeholder="+795865458">
+
+    <br>
+    <input type="submit" id="btnAddPost" name="btnAddPost" value="Add Post" onclick="" style="cursor:pointer"/>
+</form>
 <a href="/main">назад</a>
 </body>
 </html>
