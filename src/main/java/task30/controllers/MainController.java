@@ -27,13 +27,13 @@ public class MainController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration() {
+    public String registrationPage() {
         return "registration";
 
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration1(@RequestParam String login,
+    public String registration(@RequestParam String login,
                                 @RequestParam String password,
                                 @RequestParam String firstName,
                                 @RequestParam String lastName,

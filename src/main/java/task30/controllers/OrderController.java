@@ -17,7 +17,7 @@ public class OrderController {
     private UserServiceInterface userServiceInterface;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String getCart(Model model) throws SQLException {
+    public String getOrders(Model model) throws SQLException {
         model.addAttribute("orders", orderDAOInterface.getOrders(new User(userServiceInterface.getSecurityLogin())));
         return "order";
     }

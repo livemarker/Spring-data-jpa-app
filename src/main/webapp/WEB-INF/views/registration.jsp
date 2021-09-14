@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<form method="POST" action="/registration" id="newPost" name ="newPost" enctype="multipart/form-data">
+<form method="POST" action="/registration" id="newUser" name ="newUser" enctype="multipart/form-data">
     <br>Введите логин
     <br>
     <label for="login"></label><input type="text" id="login" name="login" placeholder="login">

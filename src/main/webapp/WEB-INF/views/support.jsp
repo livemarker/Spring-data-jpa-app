@@ -23,6 +23,8 @@
 </table>
 
 <br>
+<a href="/supportAdd">добавить обращение</a>
+<br>
 <br>
 <a href="/account">назад</a>
 
